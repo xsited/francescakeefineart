@@ -1,0 +1,57 @@
+<html>
+<head>
+<style>
+.mainimage {
+    float: left;
+    padding-right: 40px;
+}
+
+table {
+    border-spacing : 0px;
+}
+table.info td {
+    border: 1px solid grey;
+    padding: 2px 10px 2px 10px;
+}
+</style>
+</head>
+<body>
+
+<h1>{{ painting.title }}</h1>
+
+<div class=mainimage>
+    <img src="images/{{ painting.full_img }}">
+</div>
+
+<div class=info>
+
+<p>Awards:</p>
+<table class="info awards">
+{% for award in awards %}
+<tr><td>{{ award['description'] }} </td></tr>
+{% endfor %}
+</table>
+
+<p>Information:</p>
+<table class="info misc">
+<tr>
+<td>Title:</td>
+<td>{{ painting.title }}</td>
+</tr>
+
+{% if info != None and info != {} %}
+{% for k in info.keys() %}
+<tr>
+<td>{{ k }}</td>
+<td>{{ info[k] }}</td>
+</tr>
+
+{% endfor %}
+{% endif %}
+
+</table>
+
+</div>
+
+</body>
+</html>
