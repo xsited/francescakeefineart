@@ -1,8 +1,21 @@
 #!/usr/bin/python
 
-import sqlite3, re, os
-from jinja2 import Template
+import sqlite3, re, os, argparse
+from jinja2 import FileSystemLoader, Environment
 
+env = Environment(loader=FileSystemLoader(['.', 'template']))
+
+parser = argparse.ArgumentParser()
+parser.add_argument("-t", "--template",
+        help="Render specific template as base template",
+        default='awards_and_thumbnails.template')
+parser.add_argument("-o", "--output",
+        help="Where to put rendered base template",
+        default=os.path.join('site', 'index.html'))
+parser.add_argument("-f", "--faa",
+        help="Use original FAA links",
+        action="store_true")
+args = parser.parse_args()
 # http://stackoverflow.com/questions/3300464/how-can-i-get-dict-from-sqlite-query
 def dict_factory(cursor, row):
     d = {}
@@ -21,8 +34,8 @@ if c.fetchone() == None:
     print "Cant find table {0} in sqlite database. Maybe you should run scraping first.".format(table_name)
     exit(-1)
 
-index_template = Template(open('index.template', 'r').read())
-painting_template = Template(open('painting.template', 'r').read())
+index_template = env.get_template(args.template)
+painting_template = env.get_template('painting.template')
 
 c.execute("select rowid,* from {0}".format(table_name))
 rows = c.fetchall()
@@ -42,13 +55,15 @@ for row in rows:
         where misc.p_id = ?
         """, [ row['rowid'] ])
     info = c.fetchone()
-    print info
 
-    row['painting_html'] = re.sub('[^a-zA-Z\d]', '_', row['title'].lower()) + '.html'
-    print "generating " + row['painting_html']
-    open('site' + os.sep + row['painting_html'], 'w+').write(
-            painting_template.render(painting=row, awards=awards, info=info)
-            )
+    if args.faa:
+        row['painting_html'] = row['full_url']
+    else:
+        row['painting_html'] = re.sub('[^a-zA-Z\d]', '_', row['title'].lower()) + '.html'
+        print "generating " + row['painting_html']
+        open(os.path.join('site', row['painting_html']), 'w+').write(
+                painting_template.render(painting=row, awards=awards, info=info)
+                )
 
-open('site' + os.sep + 'index.html', 'w+').write(index_template.render(paintings=rows))
+open(args.output, 'w+').write(index_template.render(paintings=rows))
 

@@ -1,36 +1,3 @@
-<html>
-<head>
-      <meta charset="UTF-8">
- <title>FrancescaKee.com - Francesca Kee Fine Art</title>
- <style>
-  td {
-    color: white;
-    font-family: sans-serif;
-    font-variant: small-caps;
-  }
-
-  a {
-    color: white;
-    font-family: sans-serif;
-    text-decoration: none;
-  }
-  .artworkdiv {
-    width: 900px;
-    overflow: hidden;
-    border: 1px solid #444444;
-    border-top: none;
-    padding-left: 25px;
-    padding-top: 10px;
-    padding-bottom: 15px;
-    float: center;
-    margin-top: 0px;
-    background-color: #FFFFFF;
-  }
- </style>
-</head>
-
-<body bgcolor="#3366AA">
-
 <table width="100%" height="100%">
      <tr>
            <td align="middle" valign="middle">
@@ -67,5 +34,3 @@
 
 </td></tr></table>
 
-</body>
-</html>
