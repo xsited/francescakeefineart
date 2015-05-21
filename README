@@ -1,0 +1,13 @@
+1) ./scrape.py 
+
+2) output 
+./gen_html.py -t template/awards.template -o site/awards.html
+index without awards, only with thumbnails:
+./gen_html.py -t template/thumbnails.template -o site/index.html
+or index with awards and thumbnails
+./gen_html.py -t template/awards_and_thumbnails.template -o site/index.html
+
+By default (if no option specified) output file is 'site/index.html' and template is awards_and_thumbnails.template
+
+TODO 
+Control the paths for both scripts to suite envionment
