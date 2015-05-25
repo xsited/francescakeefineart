@@ -1,0 +1,59 @@
+<html>
+<head>
+      <meta charset="UTF-8">
+ <title>FrancescaKee.com - Francesca Kee Fine Art</title>
+ <style>
+  td {
+    color: white;
+    font-family: sans-serif;
+    font-variant: small-caps;
+  }
+
+  a {
+    color: white;
+    font-family: sans-serif;
+    text-decoration: none;
+  }
+  .artworkdiv {
+    width: 900px;
+    overflow: hidden;
+    border: 1px solid #444444;
+    border-top: none;
+    padding-left: 25px;
+    padding-top: 10px;
+    padding-bottom: 15px;
+    float: center;
+    margin-top: 0px;
+    background-color: #FFFFFF;
+  }
+ </style>
+
+ <script>
+    var req = new XMLHttpRequest();
+    req.open('GET', 'awards_block.html');
+    req.onload = function() {
+        if (req.status == 200) {
+            document.getElementById("awards").innerHTML = req.response;
+        }
+        else {
+            console.log(req.statusText);
+        }
+    };
+
+    req.onerror = function() {
+        console.log(Error("Network Error"));
+    };
+
+    req.send();
+ </script>
+
+</head>
+
+<body bgcolor="#3366AA">
+
+<div id=awards></div>
+
+{% include 'thumbnails_block.template' %}
+
+</body>
+</html>
