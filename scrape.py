@@ -42,8 +42,9 @@ for page in [1, 2, 3]:
     bs = BeautifulSoup(wget(url))
 
     for t in bs.find_all('div', attrs={'class':'flowdiv'}):
-        js = t.div.attrs['onclick']
-        link_to_full = re.search('window\.location="?([^"]+)"?', js).group(1)
+        link_to_full = t.a.attrs['href']
+        if not link_to_full.startswith('http://'):
+            link_to_full = 'http://francesca-kee.artistwebsites.com/' + link_to_full
         logging.debug('found link {0}'.format(link_to_full))
         if not pdb.paint_exists(link_to_full):
             bs_full = BeautifulSoup(wget(link_to_full))
